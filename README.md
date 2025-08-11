@@ -8,6 +8,7 @@ Automated bioinformatics pipeline for bacterial pathogens including:
 - *Escherichia coli*
 - *Enterococcus faecalis*
 - *Neisseria gonorrhoeae*
+- Works for every bacteria*
 
 ---
 
@@ -63,3 +64,46 @@ If you're using a different OS, refer to the official documentation for each too
 ### 1️⃣ Update & Upgrade System
 ```bash
 sudo apt update && sudo apt upgrade -y
+sudo apt install -y build-essential wget unzip git
+# BWA
+sudo apt install -y bwa
+
+# Samtools
+sudo apt install -y samtools
+
+# BCFtools
+sudo apt install -y bcftools
+
+# VCFtools
+sudo apt install -y vcftools
+
+# Prokka
+sudo apt install -y prokka
+
+# IQ-TREE
+sudo apt install -y iqtree
+
+# Roary (via conda)
+conda create -n roary_env roary -c bioconda -c conda-forge
+conda activate roary_env
+
+# ABRicate
+sudo apt install -y abricate
+
+# IGV
+wget https://data.broadinstitute.org/igv/projects/downloads/IGV_2.17.4.zip
+unzip IGV_2.17.4.zip
+# CARD database for ABRicate
+abricate --setupdb
+
+# ResFinder database
+abricate-get_db.py --db resfinder
+abricate --setupdb
+# R packages
+sudo apt install -y r-base
+R -e "install.packages(c('ggplot2', 'tidyverse', 'ape', 'gplots'))"
+
+# Python packages
+pip install biopython matplotlib pandas seaborn
+conda install -c bioconda -c conda-forge bwa samtools bcftools vcftools prokka iqtree roary abricate
+Work on your ubuntu Linux terminal
