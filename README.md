@@ -53,3 +53,13 @@ Automated bioinformatics pipeline for bacterial pathogens including:
 **Beckley Brown**  
 📧 brownbeckley94@gmail.com  
 🔗 [LinkedIn](https://linkedin.com/in/beckley-brown)
+
+
+## 🛠 Installation & Setup
+
+Below are commands to install the tools used in this project on a Linux (Ubuntu/Debian) system.  
+If you're using a different OS, refer to the official documentation for each tool.
+
+### 1️⃣ Update & Upgrade System
+```bash
+sudo apt update && sudo apt upgrade -y
