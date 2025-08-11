@@ -1,0 +1,47 @@
+name: Bacterial Analysis Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "*.fastq.gz"
+      - "*.fastq"
+      - "reference.fasta"
+      - "bacteria_pipeline.sh"
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install dependencies
+      - name: Install bioinformatics tools
+        run: |
+          sudo apt update && sudo apt install -y \
+            fastqc trimmomatic bwa samtools bcftools prokka \
+            abricate mafft clustalw spades iqtree
+          # Install Roary via conda
+          sudo apt install -y python3-pip
+          pip install biopython
+          wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+          bash miniconda.sh -b -p $HOME/miniconda
+          export PATH="$HOME/miniconda/bin:$PATH"
+          conda install -c bioconda -c conda-forge roary
+
+      # Step 3: Run the pipeline
+      - name: Run bacterial pipeline
+        run: |
+          chmod +x bacteria_pipeline.sh
+          ./bacteria_pipeline.sh
+          
+      # Step 4: Upload results as workflow artifacts
+      - name: Upload analysis results
+        uses: actions/upload-artifact@v4
+        with:
+          name: bacterial-analysis-results
+          path: analysis_results/
